@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<button id="prev">prev</button>
+<button id="next">next</button>
+
+
+<script>
+    //     зробити масив на 100 об'єктів та дві кнопки prev next
+    // при завантажені сторінки з'являються перші 10 об'єктів.
+    //     При натисканні next виводяться настпні 10 об'єктів
+    // При натисканні prev виводяться попередні 10 об'єктів
+
+    let bigArray = [];
+    for(let i = 1; i <= 100; i++){
+        bigArray.push({id: i});
+    }
+
+
+    let listWrap = document.createElement('ul');
+    let buildList = function (arr){
+        for(let item of arr){
+            let listItem = document.createElement('li');
+            listItem.innerText = item.id;
+            listWrap.appendChild(listItem);
+        }
+        document.body.appendChild(listWrap);
+    }
+
+    let sortArray = function (arr, counter){
+        return arr.filter((el)=>{
+            return (counter * 10) >= el.id && el.id > ((counter - 1) * 10);
+        })
+    }
+
+        let pagesCounter = 1;
+        let sortedArray = sortArray(bigArray, pagesCounter);
+
+        let buttonNext = document.getElementById('next');
+        let buttonPrev = document.getElementById('prev');
+        if (pagesCounter === 1) buttonPrev.disabled = true;
+
+        buildList(sortedArray);
+
+        buttonNext.onclick = function () {
+            ++pagesCounter;
+            if (pagesCounter === 10) buttonNext.disabled = true;
+            buttonPrev.disabled = false;
+            sortedArray = sortArray(bigArray, pagesCounter);
+            listWrap.innerHTML = '';
+            buildList(sortedArray);
+        }
+        buttonPrev.onclick = function () {
+            --pagesCounter;
+            if (pagesCounter === 1) buttonPrev.disabled = true;
+            buttonNext.disabled = false;
+            sortedArray = sortArray(bigArray, pagesCounter);
+            listWrap.innerHTML = '';
+            buildList(sortedArray);
+        }
+
+</script>
+</body>
+</html>

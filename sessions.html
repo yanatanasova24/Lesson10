@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+
+<script>
+    const sessions = JSON.parse(localStorage.getItem('curDate'));
+    if(sessions){
+        for(let session of sessions){
+            let day = session.day;
+            let month = session.month;
+            let year = session.year;
+            let hours = session.hours;
+            let minutes = session.minutes;
+            let dateWrap = document.createElement('h3');
+            dateWrap.innerText = `Day of your visit is ${day} ${month} ${year}`;
+            let timeWrap = document.createElement('span');
+            timeWrap.innerText = `Time is ${hours} : ${minutes}`;
+            document.body.appendChild(dateWrap);
+            document.body.appendChild(timeWrap);
+        }
+    }
+
+</script>
+</body>
+</html>
